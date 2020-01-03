@@ -18,9 +18,10 @@ checkpoint
 *_cache
 .cache
 data
-save
+save*
 .eggs
 eggs/
 *.egg
 .DS_Store
 .vscode/*
+*.so
