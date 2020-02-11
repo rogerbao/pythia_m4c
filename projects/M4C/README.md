@@ -19,7 +19,7 @@ Project Page: http://ronghanghu.com/m4c
 Clone this repository, and build it with the following command.
 ```
 cd ~/pythia
-python setup.py develop
+python setup.py build develop
 ```
 This will install all M4C dependencies such as `pytorch-transformers` and `editdistance` and will also compile the python interface for PHOC features.
 
@@ -61,9 +61,16 @@ For example:
 
 1) to train the M4C model on the TextVQA training set:
 ```
+# Data Parallel
 python tools/run.py --tasks vqa --datasets m4c_textvqa --model m4c \
 --config configs/vqa/m4c_textvqa/m4c.yml \
 training_parameters.data_parallel True
+
+# Distributed Data Parallel (on a 4-GPU machine), usually faster
+# (change `--nproc_per_node 4` to the actual GPU number on your machine)
+python -m torch.distributed.launch --nproc_per_node 4 tools/run.py --tasks vqa --datasets m4c_textvqa --model m4c \
+--config configs/vqa/m4c_textvqa/m4c.yml \
+training_parameters.distributed True
 ```
 (Replace `m4c_textvqa` with other datasets and `configs/vqa/m4c_textvqa/m4c.yml` with other config files to train with other datasets and configurations. See the table above.)
 
